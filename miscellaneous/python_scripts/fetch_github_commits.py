@@ -9,12 +9,15 @@ def fetch_all_commits(repo_owner, repo_name, access_token):
     headers = {
         'Authorization': f'token {access_token}'
     }
+    params = {
+        'sha': 'dev',
+    }
 
     all_commits = []
 
     try:
         while url:
-            response = requests.get(url, headers=headers)
+            response = requests.get(url, headers=headers, params=params)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             commits = response.json()
             all_commits.extend(commits)
