@@ -1,7 +1,7 @@
 import json
 import requests
 
-def fetch_all_commits(repo_owner, repo_name, access_token):
+def fetch_all_commits(repo_owner, repo_name, access_token, branch="main"):
     # GitHub API endpoint for fetching commits
     url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits"
 
@@ -9,8 +9,9 @@ def fetch_all_commits(repo_owner, repo_name, access_token):
     headers = {
         'Authorization': f'token {access_token}'
     }
+
     params = {
-        'sha': 'dev',
+        'sha': branch,
     }
 
     all_commits = []
@@ -57,10 +58,11 @@ def fetch_commit_files(repo_owner, repo_name, commit_sha, access_token):
 if __name__ == "__main__":
     repo_owner = 'scienceto'
     repo_name = 'sim'
-    access_token = 'YOUR_GITHUB_TOKEN'
+    access_token = 'YOUR_GITHUB_ACCESS_TOKEN'
+    branch = 'dev'
 
     # Fetch all commits
-    commits = fetch_all_commits(repo_owner, repo_name, access_token)
+    commits = fetch_all_commits(repo_owner, repo_name, access_token, branch)
     json.dump(commits, open("commits.json", "w"))
 
     # Load commits from file (for testing)
